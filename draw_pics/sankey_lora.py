@@ -19,7 +19,7 @@ labels = ["collected pool",  #0
           "Illustrious style lora", #12 210
           "Illustrious unstable lora", #13 10802
           "FLUX content sampled by aesthetic score", #14 100
-          "Illustrious content sampled by aesthetic score" #15 800
+          "Illustrious content sampled by aesthetic score", #15 800
 ]
 
 source = [0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 5, 11]

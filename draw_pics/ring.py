@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-import json
-import argparse
-from pathlib import Path
-
-import matplotlib.pyplot as plt
 """
 python /Users/leolan/Downloads/WorkSpace/ECCV/draw_pics/ring.py --json /Users/leolan/Downloads/WorkSpace/ECCV/draw_pics/flux_style_categories.json \
     --out style_ring \
@@ -20,7 +12,7 @@ import json
 import math
 import argparse
 from pathlib import Path
-
+import os 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Wedge
 
@@ -143,16 +135,21 @@ def main():
 
     ax.add_artist(plt.Circle((0, 0), hole_r, color="white", zorder=10))
     ax.text(0, 0, args.center, ha="center", va="center",
-            fontsize=34, fontweight="bold", color="#111111", zorder=11)
+            fontsize=25, fontweight="bold", color="#111111", zorder=11)
 
     # 防止“残缺”：固定显示范围，整圆必定完整
     pad = 0.12
     ax.set_xlim(-(outer_r + pad), outer_r + pad)
     ax.set_ylim(-(outer_r + pad), outer_r + pad)
+    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../figures")
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
-    out = Path(args.out)
-    fig.savefig(out.with_suffix(".png"), bbox_inches="tight", facecolor="white")
-    fig.savefig(out.with_suffix(".svg"), bbox_inches="tight", facecolor="white")
+    save_path_svg = os.path.join(output_dir, f"{args.out}.svg")
+    save_path_png = os.path.join(output_dir, f"{args.out}.png")
+    # out = Path(args.out)
+    fig.savefig(save_path_png, bbox_inches="tight", facecolor="white")
+    fig.savefig(save_path_svg, bbox_inches="tight", facecolor="white")
     plt.close(fig)
 
 if __name__ == "__main__":

@@ -1,0 +1,53 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\@writefile{toc}{\contentsline {title}{FreeStyle: Free Control of Style Content Generation from Community LoRA Mining}{1}{chapter.1}\protected@file@percent }
+\@writefile{toc}{\authcount {1}}
+\@writefile{toc}{\contentsline {author}{Anonymous ECCV 2026{} Submission}{1}{chapter.1}\protected@file@percent }
+\citation{huang2017adain,li2017wct}
+\citation{gal2023textual}
+\citation{ruiz2023dreambooth}
+\citation{hu2022lora}
+\citation{sohn2023styledrop}
+\@writefile{toc}{\contentsline {section}{\numberline {1}introduction}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{1}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Visual Style Transfer}{1}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Subject-Driven Generation}{1}{subsection.2.2}\protected@file@percent }
+\citation{zhang2023controlnet}
+\citation{ye2023ipadapter}
+\citation{wu2024stylealign}
+\citation{wang2024instantstyle}
+\citation{qi2024deadiff}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Reference-Based Generation (Sref \& Cref)}{2}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}data pipeline}{2}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}benchmark}{2}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}training architecture}{2}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}image encoder insight}{2}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why VAE Latents for Style Representation.}{2}{section*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Style Separability Analysis.}{2}{section*.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces t-SNE visualizations of style embeddings produced by different image encoders on the OmniStyle dataset. Colors indicate the style category assigned by the dataset. VAE latents show clearer inter-class separation, suggesting better preservation of stylistic factors.}}{3}{figure.caption.4}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:omni_tsne_encoders}{{1}{3}{t-SNE visualizations of style embeddings produced by different image encoders on the OmniStyle dataset. Colors indicate the style category assigned by the dataset. VAE latents show clearer inter-class separation, suggesting better preservation of stylistic factors}{figure.caption.4}{}}
+\newlabel{fig:omni_tsne_encoders@cref}{{[figure][1][]1}{[1][2][]3}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Community LoRA Case Study.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}explicit content and style guidance}{3}{subsection.5.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces t-SNE visualizations of images generated using different community LoRA modules under a fixed prompt template. Colors indicate the LoRA identity (trigger word group). Encoders that are less sensitive to high-frequency textures tend to mix distinct styles, whereas texture-aware representations yield more separable clusters.}}{4}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:lora_trigger_tsne}{{2}{4}{t-SNE visualizations of images generated using different community LoRA modules under a fixed prompt template. Colors indicate the LoRA identity (trigger word group). Encoders that are less sensitive to high-frequency textures tend to mix distinct styles, whereas texture-aware representations yield more separable clusters}{figure.caption.6}{}}
+\newlabel{fig:lora_trigger_tsne@cref}{{[figure][2][]2}{[1][3][]4}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Early-Block Layout Supervision}{4}{section*.7}\protected@file@percent }
+\bibstyle{splncs04}
+\bibdata{main}
+\bibcite{gal2023textual}{1}
+\bibcite{hu2022lora}{2}
+\bibcite{huang2017adain}{3}
+\bibcite{li2017wct}{4}
+\bibcite{qi2024deadiff}{5}
+\bibcite{ruiz2023dreambooth}{6}
+\bibcite{sohn2023styledrop}{7}
+\bibcite{wang2024instantstyle}{8}
+\bibcite{wu2024stylealign}{9}
+\bibcite{ye2023ipadapter}{10}
+\bibcite{zhang2023controlnet}{11}
+\@writefile{toc}{\contentsline {subsubsection}{Late-Block Style/Detail Losses}{5}{section*.8}\protected@file@percent }
+\gdef \@abspage@last{7}

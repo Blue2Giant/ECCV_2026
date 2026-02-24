@@ -1,0 +1,55 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{gal2023textual}
+Gal, R., Alaluf, Y., Atzmon, Y., Patashnik, O., Bermano, A.H., Chechik, G.,
+  Cohen-Or, D.: An image is worth one word: Personalizing text-to-image
+  generation using textual inversion. In: ICLR (2023)
+
+\bibitem{hu2022lora}
+Hu, E.J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L.,
+  Chen, W.: Lora: Low-rank adaptation of large language models. In: ICLR (2022)
+
+\bibitem{huang2017adain}
+Huang, X., Belongie, S.: Arbitrary style transfer in real-time with adaptive
+  instance normalization. In: ICCV. pp. 1501--1510 (2017)
+
+\bibitem{li2017wct}
+Li, Y., Fang, C., Yang, J., Wang, Z., Lu, X., Yang, M.H.: Universal style
+  transfer via feature transforms. In: NeurIPS (2017)
+
+\bibitem{qi2024deadiff}
+Qi, T., Shanyan, G., Sie, Y., et~al.: Deadiff: An efficient stylization
+  diffusion model with disentangled representations. In: CVPR (2024)
+
+\bibitem{ruiz2023dreambooth}
+Ruiz, N., Li, Y., Jampani, V., Pritch, Y., Rubinstein, M., Aberman, K.:
+  Dreambooth: Fine tuning text-to-image diffusion models for subject-driven
+  generation. In: CVPR. pp. 22500--22510 (2023)
+
+\bibitem{sohn2023styledrop}
+Sohn, K., Ruiz, N., Lee, K., Chin, D.C., Blok, I., Chang, H., Barber, J.,
+  Jiang, L., Entis, G., Li, Y., et~al.: Styledrop: Text-to-image generation in
+  any style. In: NeurIPS (2023)
+
+\bibitem{wang2024instantstyle}
+Wang, H., Wang, Q., Bai, X., Qin, Z., Chen, A.: Instantstyle: Free lunch for
+  style preservation in text-to-image generation. arXiv preprint
+  arXiv:2404.02733  (2024)
+
+\bibitem{wu2024stylealign}
+Wu, B., Chuang, C.H., Wang, X.: Stylealign: Zero-shot style alignment of
+  text-to-image diffusion models. In: CVPR (2024)
+
+\bibitem{ye2023ipadapter}
+Ye, H., Zhang, J., Liu, S., Han, X., Yang, W.: Ip-adapter: Text compatible
+  image prompt adapter for text-to-image diffusion models. arXiv preprint
+  arXiv:2308.06721  (2023)
+
+\bibitem{zhang2023controlnet}
+Zhang, L., Rao, A., Agrawala, M.: Adding conditional control to text-to-image
+  diffusion models. In: ICCV. pp. 3836--3847 (2023)
+
+\end{thebibliography}

@@ -1,7 +1,12 @@
 """
 python /Users/leolan/Downloads/WorkSpace/ECCV/draw_pics/ring.py --json /Users/leolan/Downloads/WorkSpace/ECCV/draw_pics/flux_style_categories.json \
     --out style_ring \
-    --inner_n 4 --ring_w 0.24 --gap  0.05
+    --inner_n 4 --ring_w 0.35 --gap  0.05
+python /Users/leolan/Downloads/WorkSpace/ECCV/draw_pics/ring.py --json /Users/leolan/Downloads/WorkSpace/ECCV/draw_pics/flux_content_categories.json \
+    --out content_ring \
+    --center "Content" \
+    --inner_n 3 --ring_w 0.35 --gap  0.05 \
+    --outer_r 1.2
 """
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-

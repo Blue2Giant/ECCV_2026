@@ -119,6 +119,37 @@ To achieve zero-shot generation, recent works introduce additional encoders or a
 
 \section{data pipeline}
 
+We summarize the category statistics of our mined community LoRA pool and the resulting triplet construction signals. Figure~\ref{fig:content_style_category_dist} reports the distributions across coarse-grained content categories and style categories. Such imbalanced, long-tailed coverage motivates our filtering and sampling strategies to ensure both sufficient diversity and stable training signals across categories.
+
+\begin{figure}[t]
+\centering
+\begin{minipage}[t]{0.48\linewidth}
+\centering
+\includegraphics[height=0.28\textheight,keepaspectratio]{figures/content_category_distribution_vertical_gap15_bar1.pdf}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}
+\centering
+\includegraphics[height=0.28\textheight,keepaspectratio]{figures/style_category_distribution_gap15_bar1.pdf}
+\end{minipage}
+\caption{Distributions of mined community LoRAs across (left) content categories and (right) style categories.}
+\label{fig:content_style_category_dist}
+\end{figure}
+
+To illustrate the end-to-end mining process, we provide a Sankey-style overview in Figure~\ref{fig:sankey_lora_mining}. It summarizes how the collected LoRA pool is partitioned by base model families and further filtered into content/style/unstable subsets, which are then used to construct high-quality reference triplets.
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/sankey_lora.pdf}
+\caption{Sankey diagram of our community LoRA mining and filtering pipeline.}
+\label{fig:sankey_lora_mining}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/trigger_word_dsitribution.pdf}
+\caption{Trigger word distribution in the mined LoRA metadata.}
+\label{fig:trigger_word_distribution}
+\end{figure}
+
 \section{benchmark}
 
 \section{training architecture}

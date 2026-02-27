@@ -1,14 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1771942615.23627 "main.aux" "main.bbl" "main" 1771942728.9488 0
+["bibtex main"] 1771943863.34961 "main.aux" "main.bbl" "main" 1771943864.53645 0
   "./main.bib" 1771922706.12545 6558 0c6bc2a1985032e706c24b13bdaca84f ""
   "./splncs04.bst" 1771811470 32146 ee21ae2a29028dc8ad842a97200982c7 ""
-  "main.aux" 1771942728.72658 5922 f040a6aa91d4fa61c778b12734980455 "pdflatex"
+  "main.aux" 1771943864.26522 5996 f9c15ee2eaedd75e759cabe38e99388b "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1771942727.99798 "/Users/leolan/Downloads/WorkSpace/ECCV/main.tex" "main.pdf" "main" 1771942728.94892 0
-  "/Users/leolan/Downloads/WorkSpace/ECCV/main.tex" 1771942727.77358 19272 2752a5bbf9946cce520a245ff22b3478 ""
+["pdflatex"] 1771943863.43615 "main.tex" "main.pdf" "main" 1771943864.53661 0
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -194,14 +193,15 @@
   "figures/content_category_distribution_vertical_gap15_bar1.pdf" 1771941946.31486 26027 80e563b25c300c69988ecb3cecab2c6b ""
   "figures/lora_different_trigger.png" 1771853535.01221 1007961 1093fc3403c6f784c159d2c0a671cd94 ""
   "figures/lora_omni.png" 1771853494.70346 821675 5d599bc3c5ede9e0a767b5d4087e94f6 ""
+  "figures/phrase.png" 1771943736.98479 579310 051b9d1d7191a504c7f2376c2ce5904c ""
   "figures/sankey_lora.pdf" 1771942160.75354 11316 edfb491e4893276ba871841333592e24 ""
   "figures/style_category_distribution_gap15_bar1.pdf" 1771941946.36374 63949 effc9b67145bc19ecaa4f79eeb87e96e ""
   "figures/trigger_word_dsitribution.pdf" 1771942583.22113 859559 bff09ceea38f99b90b772299f611ab29 ""
   "llncs.cls" 1771811470 42312 5c930e3a884976fbd3796e3ab18cc1af ""
-  "main.aux" 1771942728.72658 5922 f040a6aa91d4fa61c778b12734980455 "pdflatex"
-  "main.bbl" 1771942615.32175 2205 78a5da0fc68f906a7f3710085534dac5 "bibtex main"
-  "main.out" 1771942728.72743 463 110c4d93d7652e7fc597c9bf25fc5108 "pdflatex"
-  "main.tex" 1771942727.77358 19272 2752a5bbf9946cce520a245ff22b3478 ""
+  "main.aux" 1771943864.26522 5996 f9c15ee2eaedd75e759cabe38e99388b "pdflatex"
+  "main.bbl" 1771943863.43373 2205 78a5da0fc68f906a7f3710085534dac5 "bibtex main"
+  "main.out" 1771943864.26592 463 110c4d93d7652e7fc597c9bf25fc5108 "pdflatex"
+  "main.tex" 1771943844.87105 19572 f30840317c58c158582a71e9b35be32c ""
   (generated)
   "main.aux"
   "main.log"

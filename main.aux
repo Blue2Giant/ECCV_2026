@@ -33,19 +33,19 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1}image encoder insight}{3}{subsection.5.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Why VAE Latents for Style Representation.}{3}{section*.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Style Separability Analysis.}{3}{section*.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Trigger word distribution in the mined LoRA metadata.}}{4}{figure.caption.4}\protected@file@percent }
-\newlabel{fig:trigger_word_distribution}{{3}{4}{Trigger word distribution in the mined LoRA metadata}{figure.caption.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Trigger word statistics in the mined LoRA metadata (left) and a phrase word cloud (right).}}{4}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:trigger_word_distribution}{{3}{4}{Trigger word statistics in the mined LoRA metadata (left) and a phrase word cloud (right)}{figure.caption.4}{}}
 \newlabel{fig:trigger_word_distribution@cref}{{[figure][3][]3}{[1][3][]4}{}{}{}}
 \@writefile{toc}{\contentsline {paragraph}{Community LoRA Case Study.}{4}{section*.8}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2}explicit content and style guidance}{4}{subsection.5.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{Early-Block Layout Supervision}{4}{section*.10}\protected@file@percent }
+\bibstyle{splncs04}
+\bibdata{main}
+\bibcite{gal2023textual}{1}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces t-SNE visualizations of style embeddings produced by different image encoders on the OmniStyle dataset. Colors indicate the style category assigned by the dataset. VAE latents show clearer inter-class separation, suggesting better preservation of stylistic factors.}}{5}{figure.caption.7}\protected@file@percent }
 \newlabel{fig:omni_tsne_encoders}{{4}{5}{t-SNE visualizations of style embeddings produced by different image encoders on the OmniStyle dataset. Colors indicate the style category assigned by the dataset. VAE latents show clearer inter-class separation, suggesting better preservation of stylistic factors}{figure.caption.7}{}}
 \newlabel{fig:omni_tsne_encoders@cref}{{[figure][4][]4}{[1][3][]5}{}{}{}}
 \@writefile{toc}{\contentsline {subsubsection}{Late-Block Style/Detail Losses}{5}{section*.11}\protected@file@percent }
-\bibstyle{splncs04}
-\bibdata{main}
-\bibcite{gal2023textual}{1}
 \bibcite{hu2022lora}{2}
 \bibcite{huang2017adain}{3}
 \bibcite{li2017wct}{4}
@@ -53,10 +53,10 @@
 \bibcite{ruiz2023dreambooth}{6}
 \bibcite{sohn2023styledrop}{7}
 \bibcite{wang2024instantstyle}{8}
+\bibcite{wu2024stylealign}{9}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces t-SNE visualizations of images generated using different community LoRA modules under a fixed prompt template. Colors indicate the LoRA identity (trigger word group). Encoders that are less sensitive to high-frequency textures tend to mix distinct styles, whereas texture-aware representations yield more separable clusters.}}{6}{figure.caption.9}\protected@file@percent }
 \newlabel{fig:lora_trigger_tsne}{{5}{6}{t-SNE visualizations of images generated using different community LoRA modules under a fixed prompt template. Colors indicate the LoRA identity (trigger word group). Encoders that are less sensitive to high-frequency textures tend to mix distinct styles, whereas texture-aware representations yield more separable clusters}{figure.caption.9}{}}
 \newlabel{fig:lora_trigger_tsne@cref}{{[figure][5][]5}{[1][4][]6}{}{}{}}
-\bibcite{wu2024stylealign}{9}
 \bibcite{ye2023ipadapter}{10}
 \bibcite{zhang2023controlnet}{11}
 \gdef \@abspage@last{9}

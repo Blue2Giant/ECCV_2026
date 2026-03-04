@@ -25,6 +25,11 @@
 \usepackage{booktabs}
 
 % The "axessiblity" package can be found at: https://ctan.org/pkg/axessibility?lang=en
+\makeatletter
+\@ifundefined{pdfcompresslevel}{\newcount\pdfcompresslevel}{}
+\@ifundefined{pdfobjcompresslevel}{\newcount\pdfobjcompresslevel}{}
+\@ifundefined{pdfminorversion}{\newcount\pdfminorversion}{}
+\makeatother
 \usepackage[accsupp]{axessibility}  % Improves PDF readability for those with disabilities.
 
 
@@ -97,6 +102,8 @@ ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
 % 还有另一种数据管线是类似USO和Omnistyle的管线，他们是利用一些sota的风格迁移模型，先收集一些互相作为参考的内容，然后选择一些风格图片做风格迁移。或者是通过自己训练的内容模型参考模型，将风格图片转化成真实风格。缺点是很容易受到sota模型的能力限制，支持的风格类型有限，在没有见过的一些风格类型上表现不佳。
 
 % 我们的数据pipeline充分利用了来自开源社区的作者们的艺术创想，我们收集了来自civitai网站的lora权重，主要是收集了一些发展的较好基础模型的lora权重，包括flux，illustrious和qwen。我们收集了大量的内容和风格lora权重，主要通过lora权重的组合得到高质量的triplet数据。
+
+
 In the context of dual-reference (style and content) data pipelines for image generation, existing data construction strategies can be broadly categorized into two main paradigms.
 
 
@@ -118,8 +125,24 @@ Recent advancements in text-to-image diffusion models have enabled high-quality 
 To achieve zero-shot generation, recent works introduce additional encoders or adapters to condition the diffusion process on reference images. ControlNet~\cite{zhang2023controlnet} and T2I-Adapter utilize spatial conditions (e.g., edges, depth) as content reference (Cref) to guide the layout. For style reference (Sref), IP-Adapter~\cite{ye2023ipadapter} employs decoupled cross-attention to inject image features. More advanced methods like StyleAlign~\cite{wu2024stylealign}, InstantStyle~\cite{wang2024instantstyle}, and DEADiff~\cite{qi2024deadiff} focus on disentangling style from content to prevent content leakage. Our approach builds upon these concepts but uniquely leverages large-scale community LoRA mining to construct a diverse and high-quality training dataset for decoupled style and content control.
 
 \section{data pipeline}
+%我们从 Civitai、TensorArt、Liblib 等平台收集开源 LoRA 权重，并通过多阶段的筛选与数据制作流程，构建同时具备内容与风格解耦信号的训练三元组数据。
+%首先，我们抓取社区 LoRA（优先选择发展成熟的基础模型系，如 FLUX、Illustrious、Qwen）及其网页端元信息（触发词、描述等）。随后基于 ComfyUI 工作流生成 3×3 网格示例图，并交由人工专家进行审核。
+%该阶段主要判断：LoRA 是否稳定出图，以及其更偏向“内容 LoRA”还是“风格 LoRA”。
 
-We summarize the category statistics of our mined community LoRA pool and the resulting triplet construction signals. Figure~\ref{fig:content_style_category_dist} reports the distributions across coarse-grained content categories and style categories. Such imbalanced, long-tailed coverage motivates our filtering and sampling strategies to ensure both sufficient diversity and stable training signals across categories.
+%在筛选得到的稳定 LoRA 上，我们进一步生成单 LoRA 图像，作为后续的内容/风格参考图。具体而言，我们准备大规模提示词库，并由 VLM 根据 LoRA 主题选择合适的提示词子集；随后在子集中采样 prompt 进行生成。
+%生成结果再交由 VLM 进行一致性判别（基于 logits 等信号），用于验证其是否与网页端 demo 在主题或风格上保持一致。
+
+%在 LoRA 组合阶段，我们观察到部分内容/风格 LoRA 的组合天然存在冲突，导致生成质量显著下降。为此，我们先对内容 LoRA 做美学评分以控制组合规模，并对高美学内容 LoRA 进行更密集的采样，同时对内容/风格配对进行过滤。
+%在通过配对有效性判别后，内容与风格 LoRA 的可用组合成功率约为 40%。基于这些有效配对，我们再进行批量双 LoRA 生成，并将生成结果与单 LoRA 参考图进行内容与风格的双向判别，最终得到高质量 triplet。
+
+We mine open-source community LoRAs from platforms such as Civitai, TensorArt, and Liblib, and construct large-scale training triplets that provide explicit signals for disentangling content and style. We first crawl LoRA weights (prioritizing well-established base-model families such as FLUX, Illustrious, and Qwen) together with their web metadata (e.g., trigger words and descriptions). Using a ComfyUI workflow, we render 3$\times$3 preview grids for each LoRA and ask expert annotators to verify generation stability and categorize it as content- or style-oriented. For each accepted LoRA, we generate single-LoRA reference images by sampling prompts from a large prompt bank, where a VLM selects an appropriate prompt subset conditioned on the LoRA theme; the VLM further performs consistency checks against the online demos. When forming content--style pairs, we observe inherent conflicts between certain LoRA combinations, so we apply aesthetic scoring to content LoRAs and filter candidate pairs before large-scale dual-LoRA generation. After pair validity screening, about 40\% of content--style pairs remain usable; we then batch-generate dual-LoRA outputs and perform bidirectional content/style verification against the single-LoRA references to obtain the final triplets.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/VIT-TSNE/datapipeline.png}
+\caption{Overview of our data pipeline.}
+\label{fig:datapipeline_overview}
+\end{figure}
 
 \begin{figure}[t]
 \centering
@@ -145,11 +168,11 @@ To illustrate the end-to-end mining process, we provide a Sankey-style overview 
 
 \begin{figure}[t]
 \centering
-\begin{minipage}[t]{0.48\linewidth}
+\begin{minipage}[t]{0.68\linewidth}
 \centering
 \includegraphics[width=\linewidth,height=0.24\textheight,keepaspectratio]{figures/trigger_word_dsitribution.pdf}
 \end{minipage}\hfill
-\begin{minipage}[t]{0.48\linewidth}
+\begin{minipage}[t]{0.32\linewidth}
 \centering
 \includegraphics[width=\linewidth,height=0.24\textheight,keepaspectratio]{figures/phrase.png}
 \end{minipage}
@@ -157,77 +180,55 @@ To illustrate the end-to-end mining process, we provide a Sankey-style overview 
 \label{fig:trigger_word_distribution}
 \end{figure}
 
+
 \section{benchmark}
 
 \section{training architecture}
 \subsection{image encoder insight}
 %image encoder argument
 %现有的image encoder对于风格图片的编码都是有损压缩，无法很好的表征出风格图像的特征，而使用DINOv2的image encoder的方法，比如USO，在Sref的任务上往往会出现风格图的内容泄漏，导致风格迁移的时候会有明显的不属于内容图的语义信息。在这方面我们做了一些可视化的实验，因此本文的图像信息在latent上还是依赖VAE编码.
-
-\paragraph{Why VAE Latents for Style Representation.}
 Most existing image encoders provide a lossy compression of style reference images and often fail to faithfully capture fine-grained stylistic cues. In particular, approaches that rely on powerful semantic encoders such as DINOv2 (e.g., USO) can exhibit \emph{content leakage} in the style-reference setting: semantic attributes from the style image may be inadvertently injected into the output, leading to visible objects or concepts that do not belong to the content reference. Motivated by this observation, we represent image information in the VAE latent space throughout our pipeline.
-
-%在omnistyle的数据集中，数据分成了8种大类，我们使用KNN对数据进行聚类，测试了不同的encoder对于8种风格数据的t-SNE效果，发现VAE能够将风格数据最好的区分开。
-
-\paragraph{Style Separability Analysis.}
-In the OmniStyle dataset, styles are organized into eight coarse categories. We perform KNN-based clustering and compare different encoders by visualizing their embeddings with t-SNE. Empirically, VAE latents yield the clearest separation among the eight style groups, indicating stronger discriminability for stylistic factors.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{figures/lora_omni.png}
-\caption{t-SNE visualizations of style embeddings produced by different image encoders on the OmniStyle dataset. Colors indicate the style category assigned by the dataset. VAE latents show clearer inter-class separation, suggesting better preservation of stylistic factors.}
-\label{fig:omni_tsne_encoders}
-\end{figure}
+%我们对一组来自illustrious basemodel的lora权重进行了推理，他们的prompt都来自于一个文本池，加上各自的触发词推理，得到风格差异大而内容差异很小的图片，经过几种常用的image encoder，最后进行t-SNE可视化，发现VAE latents能够很好的区分出不同的风格数据，而其他encoder比如其他工作常用的SigLip和DINO则无法很好的区分。
 
 %同时我们给予illustrious的一个社区版本，waiillustrious的chekcpoint，收集了五种截然不同的风格lora，然后使用一组完全相同的prompt，加上每个lora的trigger word生成图片，将生成的图片经过不同的image encoder，发现一些image encoder无法很好的区分开不同的风格数据，尤其是CLIP-based的encoder，可能受限于他们的感知尺寸，高频纹理感知不佳。
 \paragraph{Community LoRA Case Study.}
 We further study a community checkpoint of Illustrious (WAI-Illustrious) and collect five stylistically distinct LoRA modules. Using an identical prompt template and each LoRA's trigger words, we generate corresponding image sets and re-encode them with different image encoders. We find that several encoders struggle to distinguish these styles, with CLIP-based encoders being particularly prone to confusion. We hypothesize this is partly due to their limited effective perceptual resolution and weaker sensitivity to high-frequency textures, which are often critical for style characterization.
-
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figures/lora_different_trigger.png}
-\caption{t-SNE visualizations of images generated using different community LoRA modules under a fixed prompt template. Colors indicate the LoRA identity (trigger word group). Encoders that are less sensitive to high-frequency textures tend to mix distinct styles, whereas texture-aware representations yield more separable clusters.}
-\label{fig:lora_trigger_tsne}
+\includegraphics[width=\linewidth]{figures/VIT-TSNE/TSNE-VIT.png}
+\caption{t-SNE visualization of embeddings produced by different image encoders on our collected samples.}
+\label{fig:tsne_vit_encoders}
 \end{figure}
+
 \subsection{explicit content and style guidance}
+%在这篇文章中我们为了避免风格图片的内容泄漏，设计了一些训练的损失函数。因为我们已经有了一个可以表征出内容和风格triplet。
+%因此我们可以在训练的过程中引入损失函数，约束预测的图像要偏离风格的内容，靠近gt的内容，这样子可以显式的约束风格迁移的过程中不会出现内容泄漏的情况。
+%在训练的第t步骤得到了预测的Vt，用一步推理得到x0=xt-tVt，然后计算x0和gt的内容损失，用x0和style的风格损失这个取负数，有两个参数分别加权，将这两个损失加起来，作为训练的损失函数。实现了显示的内容约束。
 
-We explicitly assign different supervision signals to different denoising blocks to reduce interference between \emph{layout/content} formation and \emph{style/detail} synthesis. We partition blocks into an early content/layout set $\mathcal{B}_c$ and a late style/detail set $\mathcal{B}_s$. Let $\hat{I}^{(b)}$ denote the intermediate prediction at block $b$, and let $I_{\mathrm{gt}}$ and $I_{\mathrm{style}}$ denote the target image and the style reference image, respectively.
 
-\subsubsection{Early-Block Layout Supervision}
-For $b \in \mathcal{B}_c$, we emphasize low-frequency structure and geometry:
-\begin{equation}
-\mathcal{L}_{\mathrm{low}}^{(b)} = \left\| \mathrm{Blur}\!\left(\hat{I}^{(b)}\right) - \mathrm{Blur}\!\left(I_{\mathrm{gt}}\right) \right\|_1,
-\end{equation}
-where $\mathrm{Blur}(\cdot)$ can be implemented by a Gaussian filter or average pooling to constrain coarse layout and large-scale illumination while being insensitive to textures. We additionally enforce edge/gradient consistency:
-\begin{equation}
-\mathcal{L}_{\mathrm{edge}}^{(b)} = \left\| \nabla \hat{I}^{(b)} - \nabla I_{\mathrm{gt}} \right\|_1,
-\end{equation}
-where $\nabla(\cdot)$ is computed by standard operators such as Sobel or Scharr. Optionally, we introduce a mid-level content feature constraint:
-\begin{equation}
-\mathcal{L}_{\mathrm{c}}^{(b)} = d\!\left( F_{\mathrm{c}}\!\left(\hat{I}^{(b)}\right),\, F_{\mathrm{c}}\!\left(I_{\mathrm{gt}}\right) \right),
-\end{equation}
-where $F_{\mathrm{c}}(\cdot)$ extracts intermediate features (e.g., from DINO or CLIP) and $d(\cdot,\cdot)$ is a feature distance.
-
-\subsubsection{Late-Block Style/Detail Losses}
-For $b \in \mathcal{B}_s$, we focus on high-frequency details and style statistics. We first define a high-pass residual:
-\begin{equation}
-\mathrm{HP}(I) = I - \mathrm{Blur}(I),
-\end{equation}
-and align residual textures via
-\begin{equation}
-\mathcal{L}_{\mathrm{high}}^{(b)} = \left\| \mathrm{HP}\!\left(\hat{I}^{(b)}\right) - \mathrm{HP}\!\left(I_{\mathrm{gt}}\right) \right\|_1.
-\end{equation}
-To further encourage stroke-level and material-level style, we match Gram-based statistics computed on features from a style extractor $F_{\mathrm{s}}(\cdot)$ (e.g., VGG or CLIP features):
-\begin{equation}
-\mathcal{L}_{\mathrm{gram}}^{(b)} = \left\| \mathrm{G}\!\left(F_{\mathrm{s}}\!\left(\hat{I}^{(b)}\right)\right) - \mathrm{G}\!\left(F_{\mathrm{s}}\!\left(I_{\mathrm{style}}\right)\right) \right\|_1,
-\end{equation}
-where $\mathrm{G}(\cdot)$ denotes the Gram matrix operator.
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lrrrrrrrr@{}}
+\toprule
+Model & DINOv2 & CAS & ONEIG & CSD & LAION & Aes2.5 & VLM-S & VLM-C \\
+\midrule
+USO & 0.81 & 1.28 & 0.54 & 0.53 & 5.97 & 5.57 & 3.74 & 9.24 \\
+CSGO & 0.65 & 1.66 & 0.52 & 0.67 & 5.43 & 4.68 & 6.19 & 1.52 \\
+EasyRef & 0.61 & 1.90 & 0.27 & 0.58 & 5.40 & 4.42 & 2.07 & 0.43 \\
+FLUX-k-9B & 0.81 & 1.08 & 0.49 & 0.66 & 6.68 & 6.02 & 6.07 & 8.34 \\
+\bottomrule
+\end{tabular}
+\caption{Mean values of different scoring metrics across models.}
+\label{tab:metric_means}
+\end{table}
 
 
 % ---- Bibliography ----
 %
 % BibTeX users should specify bibliography style 'splncs04'.
-% References will then be sorted and formatted in the correct style.
 %
 \bibliographystyle{splncs04}
 \bibliography{main}
